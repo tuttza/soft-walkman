@@ -31,6 +31,7 @@ namespace Soft_Walkman
     {
         private Models.CassetteTape cassetteTape;
         private Models.Walkman walkman;
+        private DispatcherTimer cassetteNameScrollTimer;
 
         public MainPage()
         {
@@ -85,6 +86,7 @@ namespace Soft_Walkman
                 {
                     walkman.PlaySound("play");
                     this.cassetteTapeGif.Play();
+                    ScrollTapeName();
                 }
 
                 walkman.ChangeLightIndicator(lightIndicator, "play");               
@@ -179,6 +181,32 @@ namespace Soft_Walkman
                 }
             }
 
+        }
+
+        private void ScrollTapeName()
+        {
+            const int TICK_NUMBER = 350;
+            cassetteNameScrollTimer = new DispatcherTimer();
+
+            if (cassetteTitleLabel.Text.Length > 23)
+            {
+                cassetteNameScrollTimer.Tick += (ss, ee) =>
+                {
+                    if (cassetteNameScrollTimer.Interval.Ticks == TICK_NUMBER)
+                    {
+                        //each time set the offset to scrollviewer.HorizontalOffset + 1
+                        scrollviewer.ChangeView(scrollviewer.HorizontalOffset + 1, null, null, true);
+                        //if the scrollviewer scrolls to the end, scroll it back to the start.
+                        if (scrollviewer.HorizontalOffset == scrollviewer.ScrollableWidth)
+                        {
+                            scrollviewer.ChangeView(0, null, null, true);
+                        }
+
+                    }
+                };
+                cassetteNameScrollTimer.Interval = new TimeSpan(TICK_NUMBER);
+                cassetteNameScrollTimer.Start();
+            }
         }
 
     }
