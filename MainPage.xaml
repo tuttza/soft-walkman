@@ -8,27 +8,27 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.492,0.582" Margin="97,16,0,0" HorizontalAlignment="Left" Width="688" Height="613" VerticalAlignment="Top">
 
-        <Button x:Name="stopButton" Click="StopButton_Click" Margin="246,419,0,0" VerticalAlignment="Top" Height="63" Width="69" ToolTipService.ToolTip="Stop Cassette Tape from playing">
+        <Button x:Name="stopButton" Click="StopButton_Click" Margin="246,423,0,0" VerticalAlignment="Top" Height="63" Width="69" ToolTipService.ToolTip="Stop Cassette Tape from playing">
             <SymbolIcon x:Name="Stop" Symbol="Stop" />
         </Button>
 
-        <Button x:Name="openButton" Click="OpenCassetteButton_ClickAsync" Margin="316,419,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Select Cassette Tape(a.k.a Folder of Music) to play">
+        <Button x:Name="openButton" Click="OpenCassetteButton_ClickAsync" Margin="316,423,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Select Cassette Tape(a.k.a Folder of Music) to play">
             <SymbolIcon x:Name="Open" Symbol="Add" />
         </Button>
 
-        <Button x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="388,450,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape" ToolTipService.Placement="Right">
+        <Button x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="388,454,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape" ToolTipService.Placement="Right">
             <SymbolIcon x:Name="FastForward" Symbol="Forward" />
         </Button>
 
-        <Button x:Name="rewindButton" Click="RewindButton_Click" Margin="173,452,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape" ToolTipService.Placement="Left">
+        <Button x:Name="rewindButton" Click="RewindButton_Click" Margin="173,456,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape" ToolTipService.Placement="Left">
             <SymbolIcon x:Name="Rewind" Symbol="Back" />
         </Button>
 
-        <Button x:Name="play" Click="Play_ClickAsync" Margin="316,483,0,0" VerticalAlignment="Top" Height="63" Width="70" RenderTransformOrigin="0.481,0.497" ToolTipService.ToolTip="Play loaded Cassette Tape" ToolTipService.Placement="Top">
+        <Button x:Name="play" Click="Play_ClickAsync" Margin="316,487,0,0" VerticalAlignment="Top" Height="63" Width="70" RenderTransformOrigin="0.481,0.497" ToolTipService.ToolTip="Play loaded Cassette Tape" ToolTipService.Placement="Top">
             <SymbolIcon x:Name="Play" Symbol="Play" />
         </Button>
 
-        <Button x:Name="pauseButton" Click="PauseButton_Click" Height="63" Width="69" Margin="246,483,0,0" VerticalAlignment="Top" ToolTipService.ToolTip="Pause Cassette Tape" ToolTipService.Placement="Bottom">
+        <Button x:Name="pauseButton" Click="PauseButton_Click" Height="63" Width="69" Margin="246,487,0,0" VerticalAlignment="Top" ToolTipService.ToolTip="Pause Cassette Tape" ToolTipService.Placement="Bottom">
             <SymbolIcon x:Name="Pause" Symbol="Pause">
             </SymbolIcon>
         </Button>
@@ -51,6 +51,25 @@
         <Slider x:Name="volumeSlider" ValueChanged="ChangeWalkmanVolume" Minimum="0" Maximum="1" Value="0.5"  Header="Volume"  HorizontalAlignment="Left" Margin="189,334,0,0" VerticalAlignment="Top" Width="260" Height="54"/>
 
         <Ellipse x:Name="lightIndicator" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="16" Margin="551,35,0,0" VerticalAlignment="Top" Width="16"/>
+
+        <Button x:Name="cassetteTrackListButton" ToolTipService.ToolTip="Track List" HorizontalAlignment="Left" Margin="542,69,0,0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="0.363,-0.177" Height="31">
+            <SymbolIcon x:Name="cassetteTrackList" Symbol="List"/>
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <ListView x:Name="CassetteTrackListView">
+                        <ListViewHeaderItem>Tracks</ListViewHeaderItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding TrackNumber}" />
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
 
     </Grid>
 </Page>

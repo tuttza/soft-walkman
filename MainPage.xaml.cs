@@ -37,6 +37,7 @@ namespace Soft_Walkman
         {
             this.InitializeComponent();
             this.cassetteTapeGif.AutoPlay = false;
+            this.cassetteTrackListButton.IsEnabled = false;
         }
 
         private async void OpenCassetteButton_ClickAsync(object sender, RoutedEventArgs e)
@@ -68,6 +69,8 @@ namespace Soft_Walkman
                 cassetteTape.DirPath = directoryPath;
                 cassetteTitleLabel.Text = cassetteTape.Title;
                 walkman.LoadCassetteTape(cassetteTape);
+                CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
+                this.cassetteTrackListButton.IsEnabled = true;
             }
         }
 
@@ -118,6 +121,7 @@ namespace Soft_Walkman
                 walkman.ChangeLightIndicator(lightIndicator, "pause");
                 walkman.Pause();
                 this.cassetteTapeGif.Stop();
+                cassetteNameScrollTimer.Stop();
             }
         }
 

@@ -24,6 +24,21 @@ namespace Soft_Walkman.Models
             return media.Count;
         }
 
+        public async Task<List<Track>> Tracks()
+        {
+            var tracks = new List<Track>();
+            int index = 0;
+
+            foreach (var track in await MediaFiles)
+            {
+                ++index;
+                var num = index.ToString() + ". ";
+                tracks.Add(new Track { TrackNumber = num, Name = track.Name });
+            }
+           
+            return tracks;
+        }
+
         private async Task<List<StorageFile>> FindMedia()
         {
             List<StorageFile> mediaFiles = new List<StorageFile>();

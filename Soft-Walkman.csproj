@@ -99,6 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\CassetteTape.cs" />
+    <Compile Include="Models\Track.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Walkman.cs" />
   </ItemGroup>
