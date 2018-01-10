@@ -31,6 +31,9 @@ namespace Soft_Walkman.Models
             MediaPlaybackList = new MediaPlaybackList();
             WalkmanSound = new MediaElement();
             AppDirectory = Windows.ApplicationModel.Package.Current.InstalledLocation;
+
+            // Disable SystemMediaTransportControls
+            MediaPlayer.CommandManager.IsEnabled = false;
         }
 
         public async void LoadCassetteTape(CassetteTape ct)

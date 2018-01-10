@@ -8,7 +8,6 @@ namespace Soft_Walkman.Models
 {
     public class Track
     {
-        public string TrackNumber { get; set; }
         public string Name { get; set; }
     }
 }

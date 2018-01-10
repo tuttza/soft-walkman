@@ -57,12 +57,13 @@
             <Button.Flyout>
                 <Flyout Placement="Bottom">
                     <ListView x:Name="CassetteTrackListView">
-                        <ListViewHeaderItem>Tracks</ListViewHeaderItem>
+                        <ListViewHeaderItem>
+                        </ListViewHeaderItem>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding TrackNumber}" />
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding TrackNumber}" TextWrapping="NoWrap" />
+                                    <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>

@@ -165,6 +165,11 @@ namespace Soft_Walkman
 
         private async void Tape_DragDrop(object sender, DragEventArgs e)
         {
+            if (cassetteTape != null)
+            {
+                return;
+            }
+
             if (e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
             {
                 var items = await e.DataView.GetStorageItemsAsync();
@@ -181,6 +186,8 @@ namespace Soft_Walkman
                         cassetteTape.DirPath = directoryPath;
                         cassetteTitleLabel.Text = cassetteTape.Title;
                         walkman.LoadCassetteTape(cassetteTape);
+                        CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
+                        this.cassetteTrackListButton.IsEnabled = true;
                     }
                 }
             }

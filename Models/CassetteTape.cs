@@ -32,8 +32,9 @@ namespace Soft_Walkman.Models
             foreach (var track in await MediaFiles)
             {
                 ++index;
-                var num = index.ToString() + ". ";
-                tracks.Add(new Track { TrackNumber = num, Name = track.Name });
+                var name = index.ToString() + $". {track.Name}";
+
+                tracks.Add(new Track { Name = name });
             }
            
             return tracks;
