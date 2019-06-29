@@ -39,12 +39,9 @@
             </Image.Source>
         </Image>
 
-        <ScrollViewer x:Name="scrollviewer" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" HorizontalScrollMode="Enabled" Margin="148,24,330,508" RenderTransformOrigin="0.502,0.564" UseLayoutRounding="False" d:LayoutRounding="Auto">
-            <ScrollViewer.RenderTransform>
-                <CompositeTransform SkewX="-0.398" TranslateX="0.285"/>
-            </ScrollViewer.RenderTransform>
+        <ScrollViewer x:Name="scrollviewer" Unloaded="TapeNameScrollViewer_Unloaded" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Enabled" HorizontalContentAlignment="Center" Margin="148,0,330,508" RenderTransformOrigin="0.502,0.564" Height="81" VerticalAlignment="Bottom">
             <Grid>
-                <TextBlock x:Name="cassetteTitleLabel" Text="Mix Tape Vol. 1"  Margin="3,63,6,1" TextWrapping="NoWrap" TextAlignment="Center" FontFamily="Courier New"  Height="19"/>
+                <TextBlock x:Name="cassetteTitleLabel" Text="Mix Tape Vol. 1"  Margin="3,63,6,1" TextWrapping="NoWrap" TextReadingOrder="Default"  TextAlignment="Center" FontFamily="Courier New"  Height="19"/>
             </Grid>
         </ScrollViewer>
 

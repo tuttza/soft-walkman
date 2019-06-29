@@ -76,12 +76,16 @@ namespace Soft_Walkman
                 if (walkman.MediaPlayer.PlaybackSession.PlaybackState != Windows.Media.Playback.MediaPlaybackState.Playing)
                 {
                     walkman.PlaySound("play");
-                    this.cassetteTapeGif.Play();
+                    cassetteTapeGif.Play();
                     ScrollTapeName();
+
                 }
 
-                walkman.ChangeLightIndicator(lightIndicator, "play");               
+                walkman.ChangeLightIndicator(lightIndicator, "play");    
+                
+                // Give some time for the Walkman sound to play before actually playing the tape.
                 await Task.Delay(2750);
+
                 walkman.Play();
             }
         }
@@ -90,7 +94,7 @@ namespace Soft_Walkman
         {
             if (walkman != null)
             {
-                walkman.FastForward(10);
+                walkman.FastForward(6);
             }
         }
 
@@ -98,7 +102,7 @@ namespace Soft_Walkman
         {
             if (walkman != null)
             {
-                walkman.Rewind(10);
+                walkman.Rewind(6);
             }
         }
 
@@ -109,7 +113,7 @@ namespace Soft_Walkman
                 walkman.ChangeLightIndicator(lightIndicator, "pause");
                 walkman.Pause();
                 this.cassetteTapeGif.Stop();
-                cassetteNameScrollTimer.Stop();
+                cassetteNameScrollTimer = null;
             }
         }
 
@@ -121,6 +125,7 @@ namespace Soft_Walkman
                 cassetteTape = null;
                 walkman.Reset();
                 cassetteTapeGif.Stop();
+                cassetteNameScrollTimer.Stop();
             }
         }
 
@@ -143,6 +148,7 @@ namespace Soft_Walkman
                 Content = content,
                 CloseButtonText = "Ok"
             };
+
             ContentDialogResult result = await cassetteTapeLoadErrorDialog.ShowAsync();
         }
 
@@ -161,6 +167,7 @@ namespace Soft_Walkman
             if (e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
             {
                 var items = await e.DataView.GetStorageItemsAsync();
+
                 if (items.Count > 0)
                 {
                     walkman = new Models.Walkman();
@@ -170,8 +177,10 @@ namespace Soft_Walkman
 
                     if (directoryPath != null)
                     {
-                        cassetteTape = new Models.CassetteTape();
-                        cassetteTape.DirPath = directoryPath;
+                        cassetteTape = new Models.CassetteTape
+                        {
+                            DirPath = directoryPath
+                        };
                         cassetteTitleLabel.Text = cassetteTape.Title;
                         walkman.LoadCassetteTape(cassetteTape);
                         CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
@@ -184,29 +193,35 @@ namespace Soft_Walkman
 
         private void ScrollTapeName()
         {
-            const int TICK_NUMBER = 350;
+            const int TICK_COUNT = 100;
+
             cassetteNameScrollTimer = new DispatcherTimer();
 
             if (cassetteTitleLabel.Text.Length > 23)
             {
                 cassetteNameScrollTimer.Tick += (ss, ee) =>
                 {
-                    if (cassetteNameScrollTimer.Interval.Ticks == TICK_NUMBER)
+                    if (cassetteNameScrollTimer.Interval.Ticks == TICK_COUNT)
                     {
-                        //each time set the offset to scrollviewer.HorizontalOffset + 1
-                        scrollviewer.ChangeView(scrollviewer.HorizontalOffset + 1, null, null, true);
+                        //each time set the offset to scrollviewer.HorizontalOffset + 5
+                        scrollviewer.ChangeView(scrollviewer.HorizontalOffset + 0.5, null, null, true);
                         //if the scrollviewer scrolls to the end, scroll it back to the start.
                         if (scrollviewer.HorizontalOffset == scrollviewer.ScrollableWidth)
-                        {
-                            scrollviewer.ChangeView(0, null, null, true);
+                         {
+                            scrollviewer.ChangeView(-1, null, null, true);
                         }
-
                     }
                 };
-                cassetteNameScrollTimer.Interval = new TimeSpan(TICK_NUMBER);
+
+                cassetteNameScrollTimer.Interval = new TimeSpan(TICK_COUNT);
+
                 cassetteNameScrollTimer.Start();
             }
         }
 
+        private void TapeNameScrollViewer_Unloaded(object sender, RoutedEventArgs e)
+        {
+            cassetteNameScrollTimer.Stop();
+        }
     }
 }
