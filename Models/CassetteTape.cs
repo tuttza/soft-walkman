@@ -16,6 +16,7 @@ namespace Soft_Walkman.Models
     {
         public StorageFolder DirPath { get; set; }
         public string Title { get { return this.DirPath.DisplayName; } }
+        public Task<string> CoverArtPath => FindCoverArt();
         public Task<List<StorageFile>> MediaFiles => FindMedia();
 
         public async Task<int> MediaSizeAsync()
@@ -41,9 +42,38 @@ namespace Soft_Walkman.Models
             return tracks;
         }
 
+        public async Task<string> FindCoverArt()
+        {
+            string coverArtPath = "";
+
+            string[] supportedImageExtentions = { ".jpg", ".jpeg", ".png", ".bmp"};
+
+            var fileQueryOptions = new QueryOptions(CommonFileQuery.DefaultQuery, supportedImageExtentions)
+            {
+                FolderDepth = FolderDepth.Deep
+            };
+
+            var query = this.DirPath.CreateFileQueryWithOptions(fileQueryOptions);
+
+            IReadOnlyList<StorageFile> storageFolder = await query.GetFilesAsync();
+
+            if (storageFolder.Count <= 0)
+            {
+                return coverArtPath;
+            }
+
+            foreach(StorageFile sf in storageFolder)
+            {
+                coverArtPath = sf.Path.ToString();
+            }
+
+            return coverArtPath;
+        }
+
         private async Task<List<StorageFile>> FindMedia()
         {
             List<StorageFile> mediaFiles = new List<StorageFile>();
+
             string[] supportedAudioExtentions = { ".mp3", ".mp4", ".m4a", ".wav", ".wma", ".flac" };
 
             var fileQueryOptions = new QueryOptions(CommonFileQuery.DefaultQuery, supportedAudioExtentions)
@@ -52,12 +82,14 @@ namespace Soft_Walkman.Models
             };
 
             var query = this.DirPath.CreateFileQueryWithOptions(fileQueryOptions);
+
             IReadOnlyList<StorageFile> storageFolder = await query.GetFilesAsync();
 
             foreach (StorageFile sf in storageFolder)
             {
                 mediaFiles.Add(sf);
             }
+
             return mediaFiles;
         }
     }

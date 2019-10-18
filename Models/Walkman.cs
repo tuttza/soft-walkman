@@ -23,7 +23,7 @@ namespace Soft_Walkman.Models
         private MediaElement WalkmanSound { get; }
         private StorageFolder AppDirectory;
 
-        public enum WalkmanState : ushort {Playing, Paused, Stopped};
+        public enum WalkmanState : ushort { Playing, Paused, Stopped };
 
         public Walkman()
         {
@@ -34,8 +34,8 @@ namespace Soft_Walkman.Models
 
             // Disable SystemMediaTransportControls
             MediaPlayer.CommandManager.IsEnabled = false;
+            
         }
-
         public async void LoadCassetteTape(CassetteTape ct)
         {
             CassetteTape = ct;
@@ -47,11 +47,6 @@ namespace Soft_Walkman.Models
             }
 
             MediaPlayer.Source = MediaPlaybackList;
-        }
-
-        public void ChangeTape()
-        {
-            MediaPlayer.Dispose();
         }
 
         public void Play()
@@ -67,13 +62,13 @@ namespace Soft_Walkman.Models
         public void FastForward(int seconds)
         {
             var session = MediaPlayer.PlaybackSession;
-            session.Position = session.Position + TimeSpan.FromSeconds(seconds);
+            session.Position += TimeSpan.FromSeconds(seconds);
         }
 
         public void Rewind(int seconds)
         {
             var session = MediaPlayer.PlaybackSession;
-            session.Position = session.Position - TimeSpan.FromSeconds(seconds);
+            session.Position -= TimeSpan.FromSeconds(seconds);
         }
 
         public void Reset()
@@ -116,7 +111,6 @@ namespace Soft_Walkman.Models
             switch(state.ToLower())
             {
                 case "play":
-                    
                     indicatorElement.Fill = new SolidColorBrush(Windows.UI.Colors.LightGreen);
                     break;
                 case "pause":
@@ -132,6 +126,28 @@ namespace Soft_Walkman.Models
         {
             Debug.WriteLine($"Changing volume to: {vol}");
             MediaPlayer.Volume = vol;
+        }
+
+        public void SetPlaybackTapeState(string tapePath, int tapePos)
+        {
+            /*
+             *  % Requirements %
+             *  
+             *  maybe use: https://docs.microsoft.com/en-us/windows/uwp/get-started/settings-learning-track
+             *  
+             * 1. create this file when a tape is loaded
+             *      a. save tape path to file
+             *      b. save mediaplayer position
+             *         aa. save when paused
+             *         bb. save when stopped.
+             *  
+             *  2. 
+             * 
+             */
+
+            ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            localSettings.Values["tapePath"] = tapePath;
+            localSettings.Values["tapePos"] = tapePos;
         }
     }
 }

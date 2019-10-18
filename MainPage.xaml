@@ -16,11 +16,11 @@
             <SymbolIcon x:Name="Open" Symbol="Add" />
         </Button>
 
-        <Button x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="388,454,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape" ToolTipService.Placement="Right">
+        <Button x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="388,456,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape" ToolTipService.Placement="Right">
             <SymbolIcon x:Name="FastForward" Symbol="Forward" />
         </Button>
 
-        <Button x:Name="rewindButton" Click="RewindButton_Click" Margin="173,456,0,0" VerticalAlignment="Top" Height="63" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape" ToolTipService.Placement="Left">
+        <Button x:Name="rewindButton" Click="RewindButton_Click" Margin="175,456,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape" ToolTipService.Placement="Left">
             <SymbolIcon x:Name="Rewind" Symbol="Back" />
         </Button>
 
@@ -54,8 +54,9 @@
             <Button.Flyout>
                 <Flyout Placement="Bottom">
                     <ListView x:Name="CassetteTrackListView">
-                        <ListViewHeaderItem>
-                        </ListViewHeaderItem>
+                        <ListView.Header>
+                            <TextBlock Text="Track List:" FontSize="14" FontWeight="SemiBold"/>
+                        </ListView.Header>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -65,6 +66,15 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+
+        <Button x:Name="cassetteAlbumArtButton" Margin="542,108,0,0" VerticalAlignment="Top" Width="33" Height="33">
+            <SymbolIcon x:Name="CassetteAlbumArt" Symbol="Pictures" Margin="-6,1,-6,-1" />
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <Image x:Name="AlbumArtImage" Height="300" Width="300" />
                 </Flyout>
             </Button.Flyout>
         </Button>
