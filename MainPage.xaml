@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d" Height="720.333" Width="875" MaxHeight="649" MaxWidth="875">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.492,0.582" Margin="97,16,0,0" HorizontalAlignment="Left" Width="688" Height="613" VerticalAlignment="Top">
@@ -47,10 +48,14 @@
 
         <Slider x:Name="volumeSlider" ValueChanged="ChangeWalkmanVolume" Minimum="0" Maximum="1" Value="0.5"  Header="Volume"  HorizontalAlignment="Left" Margin="189,334,0,0" VerticalAlignment="Top" Width="260" Height="54"/>
 
-        <Ellipse x:Name="lightIndicator" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="16" Margin="551,35,0,0" VerticalAlignment="Top" Width="16"/>
+        <Ellipse x:Name="lightIndicator" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="16" Margin="551,35,0,0" VerticalAlignment="Top" Width="16">
+        </Ellipse>
 
         <Button x:Name="cassetteTrackListButton" ToolTipService.ToolTip="Track List" HorizontalAlignment="Left" Margin="542,69,0,0" VerticalAlignment="Top" Width="33" RenderTransformOrigin="0.363,-0.177" Height="31">
             <SymbolIcon x:Name="cassetteTrackList" Symbol="List"/>
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="Control" Key="T" ></KeyboardAccelerator>
+            </Button.KeyboardAccelerators>
             <Button.Flyout>
                 <Flyout Placement="Bottom">
                     <ListView x:Name="CassetteTrackListView">
@@ -60,7 +65,6 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding TrackNumber}" TextWrapping="NoWrap" />
                                     <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" />
                                 </StackPanel>
                             </DataTemplate>
@@ -72,6 +76,9 @@
 
         <Button x:Name="cassetteAlbumArtButton" Margin="542,108,0,0" VerticalAlignment="Top" Width="33" Height="33">
             <SymbolIcon x:Name="CassetteAlbumArt" Symbol="Pictures" Margin="-6,1,-6,-1" />
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Modifiers="Control" Key="A"></KeyboardAccelerator>
+            </Button.KeyboardAccelerators>
             <Button.Flyout>
                 <Flyout Placement="Bottom">
                     <Image x:Name="AlbumArtImage" Height="300" Width="300" />

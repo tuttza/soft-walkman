@@ -162,7 +162,7 @@ namespace Soft_Walkman
                 {
                     walkman.Play();
                     EnableUIButtons(true);
-                } 
+                }
                 else
                 {
                     EnableUIButtons(true);
