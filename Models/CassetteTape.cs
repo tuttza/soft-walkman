@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
+using Soft_Walkman.Interfaces;
 
 namespace Soft_Walkman.Models
 {
-    public sealed class CassetteTape
+    public sealed class CassetteTape: ICassetteTape
     {
         public StorageFolder DirPath { get; set; }
         public string Title { get { return this.DirPath.DisplayName; } }
@@ -64,7 +65,7 @@ namespace Soft_Walkman.Models
             return coverArtPath;
         }
 
-        private async Task<List<StorageFile>> FindMedia()
+        public async Task<List<StorageFile>> FindMedia()
         {
             List<StorageFile> mediaFiles = new List<StorageFile>();
 

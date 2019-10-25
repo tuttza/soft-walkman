@@ -7,13 +7,15 @@ using Windows.Storage;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.ApplicationModel.Activation;
+using Soft_Walkman.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Soft_Walkman
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// The Main and only page for the Walkman.
     /// </summary>
     /// 
     public sealed partial class MainPage : Page
@@ -28,13 +30,65 @@ namespace Soft_Walkman
             this.cassetteTapeGif.AutoPlay = false;
             this.cassetteTrackListButton.IsEnabled = false;
             this.cassetteAlbumArtButton.IsEnabled = false;
+
+            Application.Current.Suspending += new SuspendingEventHandler(App_Suspending);
+
+            //CassetteTapeState tapeState = new CassetteTapeState();
+            //tapeState.ClearTapeState();
+            ResumeTape();
+
         }
+
+        private async void ResumeTape()
+        {
+            CassetteTapeState tapeState = new CassetteTapeState();
+
+            if (tapeState.GetTapeSaved())
+            {
+                DisableFlyoutButtons();
+                EnableUIButtons(false);
+
+                walkman = new Models.Walkman();
+
+                cassetteTape            = new Models.CassetteTape();
+                cassetteTape.DirPath    = await StorageFolder.GetFolderFromPathAsync(tapeState.GetTapePath());
+                cassetteTitleLabel.Text = cassetteTape.Title;
+
+                await walkman.LoadCassetteTape(cassetteTape);
+
+                walkman.MediaPlaybackList.MoveTo(tapeState.GetTapeTrackIndex());
+
+                walkman.MediaPlayer.PlaybackSession.Position = tapeState.GetTapePostion();
+
+                CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
+                cassetteTrackListButton.IsEnabled = true;
+
+                await DisplayAlbumArtAsync();
+
+                EnableUIButtons(true);
+                
+            }
+        }
+
+        private void App_Suspending(Object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+        {
+            if (walkman != null && cassetteTape != null)
+            {
+                Debug.WriteLine("Saving tape state on exit...");
+                CassetteTapeState cts = new CassetteTapeState(walkman, cassetteTape);
+                cts.SaveTapeState();
+            }
+        }
+
 
         private async void OpenCassetteButton_ClickAsync(object sender, RoutedEventArgs e)
         {
             // Eject tape. Clear cassette and reset walkman state.
             if (cassetteTape != null && walkman != null)
             {
+                CassetteTapeState tapeState = new CassetteTapeState();
+                tapeState.ClearTapeState();
+
                 walkman.PlaySound("eject");
                 walkman.Reset();
                 cassetteTapeGif.Stop();
@@ -67,7 +121,7 @@ namespace Soft_Walkman
                 cassetteTape = new Models.CassetteTape();
                 cassetteTape.DirPath = directoryPath;
                 cassetteTitleLabel.Text = cassetteTape.Title;
-                walkman.LoadCassetteTape(cassetteTape);
+                await walkman.LoadCassetteTape(cassetteTape);
 
                 // Populate Track listview:
                 CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
@@ -101,14 +155,10 @@ namespace Soft_Walkman
                 using (var stream = await coverStorageFile.OpenAsync(Windows.Storage.FileAccessMode.Read))
                 {
                     BitmapImage bitmap = new BitmapImage();
+
                     bitmap.SetSource(stream);
 
-                    //int albumCoverWidth = bitmap.PixelWidth;
-                    //int albumCoverHeight = bitmap.PixelHeight;
-
                     AlbumArtImage.Source = bitmap;
-                    //AlbumArtImage.Width = albumCoverWidth;
-                    //AlbumArtImage.Height = albumCoverHeight;
                 }
 
                 this.cassetteAlbumArtButton.IsEnabled = true;
@@ -128,6 +178,7 @@ namespace Soft_Walkman
 
         private async void Play_ClickAsync(object sender, RoutedEventArgs e)
         {
+
             if (cassetteTape == null || walkman == null)
             {
                 ErrorDialog("Have you loaded your tape yet?", "Click the open button(+) to load your cassette tape.");
@@ -175,7 +226,6 @@ namespace Soft_Walkman
             if (walkman != null && cassetteTape != null)
             {
                 walkman.FastForward(6);
-
             }
         }
 
@@ -195,6 +245,9 @@ namespace Soft_Walkman
                 walkman.Pause();
                 cassetteNameScrollTimer.Stop();
                 this.cassetteTapeGif.Stop();
+
+                CassetteTapeState tapeState = new CassetteTapeState(walkman, cassetteTape);
+                tapeState.SaveTapeState();
             }
         }
 
@@ -210,6 +263,9 @@ namespace Soft_Walkman
                 cassetteTitleLabel.Text = string.Empty;
 
                 DisableFlyoutButtons();
+
+                CassetteTapeState tapeState = new CassetteTapeState();
+                tapeState.ClearTapeState();
             }
         }
 
