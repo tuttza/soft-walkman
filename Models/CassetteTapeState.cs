@@ -12,9 +12,7 @@ namespace Soft_Walkman.Models
     {
         private static readonly string[] StateKeys = { "tapeSaved", "tapePath", "tapePlayPos", "tapeTrack" };
 
-
         private uint _tapeTrackIndex;
-
         public uint GetTapeTrackIndex()
         {
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -59,7 +57,6 @@ namespace Soft_Walkman.Models
             {
                 return false;
             }
-
         }
 
         public void SetTapeSaved(bool val)
@@ -103,9 +100,7 @@ namespace Soft_Walkman.Models
             localSettings.Values[StateKeys[2]] = _tapePositoin;
         }
 
-
         private string _tapePath;
-
         public string GetTapePath()
         {
             ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -118,14 +113,12 @@ namespace Soft_Walkman.Models
                 Debug.WriteLine("getting _tapePath of {0}", _tapePath);
 
                 return _tapePath;
-
             }
             else
             {
                 Debug.WriteLine("creating empty string instance...");
                 return "";
             }
-
         }
 
         public void SetTapePath(string val)
