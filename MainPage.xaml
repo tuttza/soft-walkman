@@ -46,7 +46,7 @@
             </Grid>
         </ScrollViewer>
 
-        <Slider x:Name="volumeSlider" ValueChanged="ChangeWalkmanVolume" Minimum="0" Maximum="1" Value="0.5"  Header="Volume"  HorizontalAlignment="Left" Margin="189,334,0,0" VerticalAlignment="Top" Width="260" Height="54"/>
+        <Slider x:Name="volumeSlider" ValueChanged="ChangeWalkmanVolume" Minimum="0" Maximum="10" Value="5" Header="Volume"  HorizontalAlignment="Left" Margin="189,334,0,0" VerticalAlignment="Top" Width="260" Height="54"/>
 
         <Ellipse x:Name="lightIndicator" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="16" Margin="551,35,0,0" VerticalAlignment="Top" Width="16">
         </Ellipse>

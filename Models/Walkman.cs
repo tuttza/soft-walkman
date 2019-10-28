@@ -28,14 +28,17 @@ namespace Soft_Walkman.Models
         public Walkman()
         {
             MediaPlayer = new MediaPlayer();
+            
             MediaPlaybackList = new MediaPlaybackList();
+            MediaPlaybackList.AutoRepeatEnabled = true;
+
             WalkmanSound = new MediaElement();
             AppDirectory = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
             // Disable SystemMediaTransportControls
-            MediaPlayer.CommandManager.IsEnabled = false;
-            
+            MediaPlayer.CommandManager.IsEnabled = false;  
         }
+
         public async Task LoadCassetteTape(CassetteTape ct)
         {
             CassetteTape = ct;
@@ -123,10 +126,10 @@ namespace Soft_Walkman.Models
              }
         }
 
-        public void Volume(double vol = 0.5)
+        public void Volume(double sliderValue)
         {
-            Debug.WriteLine($"Changing volume to: {vol}");
-            MediaPlayer.Volume = vol;
+            double volumeLevel = sliderValue / 10;
+            this.MediaPlayer.Volume = volumeLevel;
         }
 
     }

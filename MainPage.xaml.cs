@@ -7,7 +7,6 @@ using Windows.Storage;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.ApplicationModel.Activation;
 using Soft_Walkman.Models;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -33,10 +32,7 @@ namespace Soft_Walkman
 
             Application.Current.Suspending += new SuspendingEventHandler(App_Suspending);
 
-            //CassetteTapeState tapeState = new CassetteTapeState();
-            //tapeState.ClearTapeState();
             ResumeTape();
-
         }
 
         private async void ResumeTape()
@@ -271,12 +267,9 @@ namespace Soft_Walkman
 
         private void ChangeWalkmanVolume(object sender, RangeBaseValueChangedEventArgs e)
         {
-            Debug.WriteLine($"volume changed to {volumeSlider.Value}");
-
-            if (walkman != null)
+            if (walkman != null && cassetteTape != null)
             {
-                Debug.WriteLine($"Current MediaPlayer Volume set at: {walkman.MediaPlayer.Volume.ToString()}");
-                walkman.MediaPlayer.Volume += 0.1;
+                walkman.Volume(volumeSlider.Value);
             }
         }
 

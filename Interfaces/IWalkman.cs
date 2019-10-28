@@ -1,13 +1,8 @@
 ﻿using Soft_Walkman.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Media.Playback;
-using Windows.Storage;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Shapes;
 
 namespace Soft_Walkman.Interfaces
 {
@@ -36,7 +31,6 @@ namespace Soft_Walkman.Interfaces
 
         public void PlaySound(string sound);
 
-        public void ChangeLightIndicator(Windows.UI.Xaml.Shapes.Ellipse indicatorElement, string state);
-
+        public void ChangeLightIndicator(Ellipse indicatorElement, string state);
     }
 }
