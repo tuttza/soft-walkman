@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using Soft_Walkman.Models;
+using Windows.UI.Input;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,12 +24,17 @@ namespace Soft_Walkman
         private Models.Walkman walkman;
         private DispatcherTimer cassetteNameScrollTimer;
 
+        const double DEFAULT_MEDIAPLAYER_VOLUME_LEVEL = 5.0;
+        const int DEFAULT_FF_RR_VALUE = 3;
+
         public MainPage()
         {
             this.InitializeComponent();
             this.cassetteTapeGif.AutoPlay = false;
             this.cassetteTrackListButton.IsEnabled = false;
             this.cassetteAlbumArtButton.IsEnabled = false;
+
+            volumeSlider.Value = DEFAULT_MEDIAPLAYER_VOLUME_LEVEL;
 
             Application.Current.Suspending += new SuspendingEventHandler(App_Suspending);
 
@@ -45,6 +51,7 @@ namespace Soft_Walkman
                 EnableUIButtons(false);
 
                 walkman = new Models.Walkman();
+                walkman.Volume(DEFAULT_MEDIAPLAYER_VOLUME_LEVEL);
 
                 cassetteTape            = new Models.CassetteTape();
                 cassetteTape.DirPath    = await StorageFolder.GetFolderFromPathAsync(tapeState.GetTapePath());
@@ -62,7 +69,6 @@ namespace Soft_Walkman
                 await DisplayAlbumArtAsync();
 
                 EnableUIButtons(true);
-                
             }
         }
 
@@ -99,7 +105,8 @@ namespace Soft_Walkman
                 cassetteTitleLabel.Text = string.Empty;
             }
 
-            walkman = new Models.Walkman(); 
+            walkman = new Models.Walkman();
+            walkman.Volume(DEFAULT_MEDIAPLAYER_VOLUME_LEVEL);
             walkman.PlaySound("open");
 
             FolderPicker fp = new FolderPicker
@@ -221,7 +228,7 @@ namespace Soft_Walkman
         {
             if (walkman != null && cassetteTape != null)
             {
-                walkman.FastForward(6);
+                walkman.FastForward(DEFAULT_FF_RR_VALUE);
             }
         }
 
@@ -229,7 +236,7 @@ namespace Soft_Walkman
         {
             if (walkman != null && cassetteTape != null)
             {
-                walkman.Rewind(6);
+                walkman.Rewind(DEFAULT_FF_RR_VALUE);
             }
         }
 
@@ -304,6 +311,7 @@ namespace Soft_Walkman
                 if (items.Count > 0)
                 {
                     walkman = new Models.Walkman();
+                    walkman.Volume(DEFAULT_MEDIAPLAYER_VOLUME_LEVEL);
                     walkman.PlaySound("open");
 
                     StorageFolder directoryPath = (StorageFolder)items[0];
@@ -315,7 +323,7 @@ namespace Soft_Walkman
                             DirPath = directoryPath
                         };
                         cassetteTitleLabel.Text = cassetteTape.Title;
-                        walkman.LoadCassetteTape(cassetteTape);
+                        await walkman.LoadCassetteTape(cassetteTape);
                         CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
                         this.cassetteTrackListButton.IsEnabled = true;
 
@@ -361,5 +369,30 @@ namespace Soft_Walkman
             cassetteNameScrollTimer.Stop();
         }
 
+        private void fastFowardButton_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            Debug.WriteLine("ff button is being held down...");
+            if (walkman != null && cassetteTape != null)
+            {
+                walkman.FastForward(1);
+            }
+
+        }
+
+        private void VolumeIncreased_Invoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            if (walkman != null && cassetteTape != null)
+            {
+                walkman.Volume(volumeSlider.Value += 0.5);
+            }
+        }
+
+        private void VolumeDecreased_Invoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            if (walkman != null && cassetteTape != null)
+            {
+                walkman.Volume(volumeSlider.Value -= 0.5);
+            }
+        }
     }
 }
