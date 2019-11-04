@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
@@ -22,7 +21,6 @@ namespace Soft_Walkman.Models
 
         private MediaElement WalkmanSound { get; }
 
-
         private StorageFolder AppDirectory;
         
         public Walkman()
@@ -36,7 +34,7 @@ namespace Soft_Walkman.Models
             AppDirectory = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
             // Disable SystemMediaTransportControls
-            MediaPlayer.CommandManager.IsEnabled = false;  
+            MediaPlayer.CommandManager.IsEnabled = false;
         }
 
         public async Task LoadCassetteTape(CassetteTape ct)

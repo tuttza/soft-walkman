@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="ef7d197e-8ba5-40a7-a80a-3fd35c3fd2af" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Soft-Walkman</DisplayName>
-    <PublisherDisplayName>zach</PublisherDisplayName>
+    <PublisherDisplayName>zach tuttle</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -44,5 +44,6 @@
   <Capabilities>
     <uap:Capability Name="musicLibrary"/>
     <uap3:Capability Name="backgroundMediaPlayback"/>
+    <uap:Capability Name="removableStorage"/>
   </Capabilities>
 </Package>

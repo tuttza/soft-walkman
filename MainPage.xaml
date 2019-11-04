@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d" Height="720.333" Width="875" MaxHeight="649" MaxWidth="875">
-
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.492,0.582" Margin="97,16,0,0" HorizontalAlignment="Left" Width="688" Height="613" VerticalAlignment="Top">
 
         <Button x:Name="stopButton" Click="StopButton_Click" Margin="246,423,0,0" VerticalAlignment="Top" Height="63" Width="69" ToolTipService.ToolTip="Stop Cassette Tape from playing | ctrl-s">
@@ -37,7 +37,7 @@
             </RepeatButton.KeyboardAccelerators>
         </RepeatButton>
 
-        <Button x:Name="play" Click="Play_ClickAsync" Margin="316,487,0,0" VerticalAlignment="Top" Height="63" Width="70" RenderTransformOrigin="0.481,0.497" ToolTipService.ToolTip="Play loaded Cassette Tape | ctrl-shift-p" ToolTipService.Placement="Top">
+        <Button x:Name="playButton" Click="Play_ClickAsync" Margin="316,487,0,0" VerticalAlignment="Top" Height="63" Width="70" RenderTransformOrigin="0.481,0.497" ToolTipService.ToolTip="Play loaded Cassette Tape | ctrl-shift-p" ToolTipService.Placement="Top">
             <SymbolIcon x:Name="Play" Symbol="Play" />
             <Button.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="Control,Shift" Key="p"></KeyboardAccelerator>

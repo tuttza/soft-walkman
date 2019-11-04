@@ -120,7 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\CassetteImages\cassetteCog.png" />
-    <Content Include="Assets\CassetteImages\cassette_tape_hd.gif" />
     <Content Include="Assets\CassetteImages\rolling-cassette.gif" />
     <Content Include="Assets\CassetteImages\sony-cassette-tape.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

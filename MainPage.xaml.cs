@@ -8,7 +8,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using Soft_Walkman.Models;
-using Windows.UI.Input;
+using Windows.ApplicationModel.Core;
+using Windows.Media;
+using System.IO;
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -26,10 +29,13 @@ namespace Soft_Walkman
 
         const double DEFAULT_MEDIAPLAYER_VOLUME_LEVEL = 5.0;
         const int DEFAULT_FF_RR_VALUE = 3;
-
         public MainPage()
         {
             this.InitializeComponent();
+
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = false; // Don't hide TitleBar
+             
             this.cassetteTapeGif.AutoPlay = false;
             this.cassetteTrackListButton.IsEnabled = false;
             this.cassetteAlbumArtButton.IsEnabled = false;
@@ -37,6 +43,7 @@ namespace Soft_Walkman
             volumeSlider.Value = DEFAULT_MEDIAPLAYER_VOLUME_LEVEL;
 
             Application.Current.Suspending += new SuspendingEventHandler(App_Suspending);
+            Application.Current.UnhandledException += new UnhandledExceptionEventHandler(App_UnhandledException);
 
             ResumeTape();
         }
@@ -45,8 +52,18 @@ namespace Soft_Walkman
         {
             CassetteTapeState tapeState = new CassetteTapeState();
 
+
             if (tapeState.GetTapeSaved())
             {
+                // if music directory moved, or external drive not mounted anymore
+                // reset State.
+                var fileInfo = new FileInfo(tapeState.GetTapePath());
+                if (!fileInfo.Exists)
+                {
+                    tapeState.ClearTapeState();
+                    return;
+                }
+
                 DisableFlyoutButtons();
                 EnableUIButtons(false);
 
@@ -82,6 +99,13 @@ namespace Soft_Walkman
             }
         }
 
+        private void App_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
+        {
+            CassetteTapeState cts = new CassetteTapeState();
+            cts.ClearTapeState();
+
+            walkman.Reset();
+        }
 
         private async void OpenCassetteButton_ClickAsync(object sender, RoutedEventArgs e)
         {
@@ -121,6 +145,8 @@ namespace Soft_Walkman
 
             if (directoryPath != null)
             {
+                string _faToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
+
                 cassetteTape = new Models.CassetteTape();
                 cassetteTape.DirPath = directoryPath;
                 cassetteTitleLabel.Text = cassetteTape.Title;
@@ -149,6 +175,7 @@ namespace Soft_Walkman
 
         private async Task DisplayAlbumArtAsync()
         {
+
             string albumCoverPath = await cassetteTape.FindCoverArt();
 
             if (albumCoverPath != null && albumCoverPath.Length > 0 && albumCoverPath != "" && albumCoverPath != " ")
@@ -166,7 +193,6 @@ namespace Soft_Walkman
 
                 this.cassetteAlbumArtButton.IsEnabled = true;
             }
-
         }
 
         private void EnableUIButtons(bool enabled_state)
@@ -176,11 +202,12 @@ namespace Soft_Walkman
             rewindButton.IsEnabled      = enabled_state;
             pauseButton.IsEnabled       = enabled_state;
             stopButton.IsEnabled        = enabled_state;
-            play.IsEnabled              = enabled_state;
+            playButton.IsEnabled        = enabled_state;
         }
 
         private async void Play_ClickAsync(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("running Play_ClickAsync");
 
             if (cassetteTape == null || walkman == null)
             {
@@ -371,7 +398,6 @@ namespace Soft_Walkman
 
         private void fastFowardButton_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            Debug.WriteLine("ff button is being held down...");
             if (walkman != null && cassetteTape != null)
             {
                 walkman.FastForward(1);
