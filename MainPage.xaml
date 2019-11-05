@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)"
     mc:Ignorable="d" Height="720.333" Width="875" MaxHeight="649" MaxWidth="875">
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.492,0.582" Margin="97,16,0,0" HorizontalAlignment="Left" Width="688" Height="613" VerticalAlignment="Top">
 
         <Button x:Name="stopButton" Click="StopButton_Click" Margin="246,423,0,0" VerticalAlignment="Top" Height="63" Width="69" ToolTipService.ToolTip="Stop Cassette Tape from playing | ctrl-s">
@@ -23,14 +23,14 @@
             </Button.KeyboardAccelerators>
         </Button>
 
-        <RepeatButton x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="388,456,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape | ctrl-f" ToolTipService.Placement="Right">
+        <RepeatButton x:Name="fastFowardButton" Click="fastFowardButton_Click" Margin="389,458,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Fast Forward Cassette Tape | ctrl-f" ToolTipService.Placement="Right">
             <SymbolIcon x:Name="FastForward" Symbol="Forward" />
             <RepeatButton.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="Control" Key="f"></KeyboardAccelerator>
             </RepeatButton.KeyboardAccelerators>
         </RepeatButton>
 
-        <RepeatButton x:Name="rewindButton" Click="RewindButton_Click" Margin="175,456,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape | ctrl-r" ToolTipService.Placement="Left">
+        <RepeatButton x:Name="rewindButton" Click="RewindButton_Click" Margin="173,458,0,0" VerticalAlignment="Top" Height="61" Width="70" ToolTipService.ToolTip="Rewind Cassette Tape | ctrl-r" ToolTipService.Placement="Left">
             <SymbolIcon x:Name="Rewind" Symbol="Back" />
             <RepeatButton.KeyboardAccelerators>
                 <KeyboardAccelerator Modifiers="Control" Key="r"></KeyboardAccelerator>

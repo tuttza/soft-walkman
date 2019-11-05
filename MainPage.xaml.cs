@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using Soft_Walkman.Models;
 using Windows.ApplicationModel.Core;
-using Windows.Media;
 using System.IO;
 
 
@@ -55,10 +54,14 @@ namespace Soft_Walkman
 
             if (tapeState.GetTapeSaved())
             {
-                // if music directory moved, or external drive not mounted anymore
-                // reset State.
-                var fileInfo = new FileInfo(tapeState.GetTapePath());
-                if (!fileInfo.Exists)
+                /*
+                 * if music directory moved, or external drive not mounted anymore reset Tape state.
+                 * 
+                 * Also we can't run the Directory check from the UI thread:
+                */
+                bool tapePathExists = await Task.Run(() => { return Directory.Exists(tapeState.GetTapePath()); });
+
+                if (!tapePathExists)
                 {
                     tapeState.ClearTapeState();
                     return;
@@ -72,6 +75,7 @@ namespace Soft_Walkman
 
                 cassetteTape            = new Models.CassetteTape();
                 cassetteTape.DirPath    = await StorageFolder.GetFolderFromPathAsync(tapeState.GetTapePath());
+                
                 cassetteTitleLabel.Text = cassetteTape.Title;
 
                 await walkman.LoadCassetteTape(cassetteTape);
@@ -101,6 +105,7 @@ namespace Soft_Walkman
 
         private void App_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
         {
+            Debug.WriteLine("exception happened exting. clearing tape state!");
             CassetteTapeState cts = new CassetteTapeState();
             cts.ClearTapeState();
 
@@ -345,16 +350,18 @@ namespace Soft_Walkman
 
                     if (directoryPath != null)
                     {
-                        cassetteTape = new Models.CassetteTape
-                        {
-                            DirPath = directoryPath
-                        };
+                        string _faToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
+
+                        cassetteTape = new Models.CassetteTape();
+                        cassetteTape.DirPath = directoryPath;
                         cassetteTitleLabel.Text = cassetteTape.Title;
                         await walkman.LoadCassetteTape(cassetteTape);
-                        CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
-                        this.cassetteTrackListButton.IsEnabled = true;
 
-                        await cassetteTape.FindCoverArt();
+                        // Populate Track listview:
+                        CassetteTrackListView.ItemsSource = await cassetteTape.Tracks();
+                        cassetteTrackListButton.IsEnabled = true;
+
+                        await DisplayAlbumArtAsync();
                     }
                 }
             }
