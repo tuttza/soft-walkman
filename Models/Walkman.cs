@@ -6,6 +6,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Soft_Walkman.Interfaces;
 using System.Threading.Tasks;
+using Windows.Media;
+using System.Diagnostics;
 
 namespace Soft_Walkman.Models
 {
@@ -34,7 +36,7 @@ namespace Soft_Walkman.Models
             AppDirectory = Windows.ApplicationModel.Package.Current.InstalledLocation;
 
             // Disable SystemMediaTransportControls
-            MediaPlayer.CommandManager.IsEnabled = false;
+            MediaPlayer.CommandManager.IsEnabled = false ;
         }
 
         public async Task LoadCassetteTape(CassetteTape ct)

@@ -105,7 +105,6 @@ namespace Soft_Walkman
 
         private void App_UnhandledException(Object sender, UnhandledExceptionEventArgs e)
         {
-            Debug.WriteLine("exception happened exting. clearing tape state!");
             CassetteTapeState cts = new CassetteTapeState();
             cts.ClearTapeState();
 
@@ -150,7 +149,7 @@ namespace Soft_Walkman
 
             if (directoryPath != null)
             {
-                string _faToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
+                string _ = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
 
                 cassetteTape = new Models.CassetteTape();
                 cassetteTape.DirPath = directoryPath;
@@ -350,7 +349,7 @@ namespace Soft_Walkman
 
                     if (directoryPath != null)
                     {
-                        string _faToken = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
+                        string _ = Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(directoryPath);
 
                         cassetteTape = new Models.CassetteTape();
                         cassetteTape.DirPath = directoryPath;
