@@ -6,23 +6,16 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Soft_Walkman.Interfaces;
 using System.Threading.Tasks;
-using Windows.Media;
-using System.Diagnostics;
 
 namespace Soft_Walkman.Models
 {
     public sealed class Walkman : IWalkman
     {
         public MediaSource MediaSource { get; }
-
         public MediaPlayer MediaPlayer { get; }
-
         public MediaPlaybackList MediaPlaybackList { get; }
-
         public CassetteTape CassetteTape { get; set; }
-
         private MediaElement WalkmanSound { get; }
-
         private StorageFolder AppDirectory;
         
         public Walkman()

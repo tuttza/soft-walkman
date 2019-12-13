@@ -141,7 +141,6 @@ namespace Soft_Walkman.Models
 
         public CassetteTapeState(Walkman walkman, CassetteTape cassette)
         {
-            
             this.walkman = walkman;
             this.cassetteTape = cassette;
             this.SavedState = ApplicationData.Current.LocalSettings;

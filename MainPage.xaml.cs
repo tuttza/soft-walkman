@@ -28,6 +28,7 @@ namespace Soft_Walkman
 
         const double DEFAULT_MEDIAPLAYER_VOLUME_LEVEL = 5.0;
         const int DEFAULT_FF_RR_VALUE = 3;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -50,7 +51,6 @@ namespace Soft_Walkman
         private async void ResumeTape()
         {
             CassetteTapeState tapeState = new CassetteTapeState();
-
 
             if (tapeState.GetTapeSaved())
             {
@@ -374,7 +374,7 @@ namespace Soft_Walkman
 
             cassetteNameScrollTimer = new DispatcherTimer();
 
-            if (cassetteTitleLabel.Text.Length > MAX_LABEL_LENGTH)
+            if ( (cassetteTitleLabel.Text.Length - 2 ) >= MAX_LABEL_LENGTH)
             {
                 cassetteNameScrollTimer.Tick += async (ss, ee) =>
                 {
