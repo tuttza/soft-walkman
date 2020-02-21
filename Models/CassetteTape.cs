@@ -46,7 +46,7 @@ namespace Soft_Walkman.Models
         {
             string coverArtPath = "";
 
-            string[] supportedImageExtentions = { ".jpg", ".jpeg", ".png", ".bmp"};
+            string[] supportedImageExtentions = { ".jpg", ".jpeg", ".png", ".bmp" };
 
             var fileQueryOptions = new QueryOptions(CommonFileQuery.DefaultQuery, supportedImageExtentions)
             {
