@@ -55,7 +55,7 @@ namespace Soft_Walkman
             if (tapeState.GetTapeSaved())
             {
                 /*
-                 * if music directory moved, or external drive not mounted anymore reset Tape state.
+                 * I f music directory moved, or external drive not mounted anymore reset Tape state.
                  * 
                  * Also we can't run the Directory check from the UI thread:
                 */
@@ -179,7 +179,6 @@ namespace Soft_Walkman
 
         private async Task DisplayAlbumArtAsync()
         {
-
             string albumCoverPath = await cassetteTape.FindCoverArt();
 
             if (albumCoverPath != null && albumCoverPath.Length > 0 && albumCoverPath != "" && albumCoverPath != " ")

@@ -29,7 +29,12 @@ namespace Soft_Walkman.Models
             {
                 ++index;
 
-                var name = index.ToString() + $". {track.Name}";
+                string formattedName = Lib.StringFormatter.RemoveNumbersFromBeginningOfString(track.Name);
+                formattedName = Lib.StringFormatter.RemoveExtension(formattedName);
+                formattedName = Lib.StringFormatter.RemoveSpecialCharNearBeginningOfString(formattedName, '-');
+                formattedName = Lib.StringFormatter.RemoveSpecialCharNearBeginningOfString(formattedName, '.');
+
+                string name = index.ToString() + $". {formattedName}";
 
                 tracks.Add(new Track { Name = name });
             }

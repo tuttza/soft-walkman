@@ -113,10 +113,10 @@ namespace Soft_Walkman.Models
 
             SavedState.Values[StateKeys[1]] = _tapePath;
         }
+
         public Walkman walkman { get; set; }
 
         public CassetteTape cassetteTape { get; set; }
-
 
         public void ClearTapeState()
         {

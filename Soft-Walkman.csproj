@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Interfaces\ICassetteTape.cs" />
     <Compile Include="Interfaces\IWalkman.cs" />
+    <Compile Include="Lib\StringFormatter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
