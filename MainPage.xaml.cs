@@ -189,7 +189,7 @@ namespace Soft_Walkman
                 {
                     BitmapImage bitmap = new BitmapImage();
 
-                    bitmap.SetSource(stream);
+                    await bitmap.SetSourceAsync(stream);
 
                     AlbumArtImage.Source = bitmap;
                 }
@@ -219,7 +219,7 @@ namespace Soft_Walkman
             else if (cassetteTape != null && await cassetteTape.MediaSizeAsync() > 0)
             {
                 //
-                // Make sure walkman system sounds can't play while audio is already playing.
+                // Make sure the walkman system sounds can't play while audio is already playing.
                 //
                 if (walkman.MediaPlayer.PlaybackSession.PlaybackState != Windows.Media.Playback.MediaPlaybackState.Playing)
                 {
@@ -232,7 +232,7 @@ namespace Soft_Walkman
 
                 EnableUIButtons(false);
 
-                // Give some time for the Walkman sound to play before actually playing the tape.
+                // Give some time for the Walkman system sound to play before actually playing the tape.
                 var delay = Task.Delay(2750);
 
                 await delay;
@@ -381,6 +381,7 @@ namespace Soft_Walkman
                     {
                         //each time set the offset to scrollviewer.HorizontalOffset + 5
                         scrollviewer.ChangeView(scrollviewer.HorizontalOffset + 0.5, null, null, true);
+                        
                         //if the scrollviewer scrolls to the end, scroll it back to the start.
                         if (scrollviewer.HorizontalOffset == scrollviewer.ScrollableWidth)
                         {

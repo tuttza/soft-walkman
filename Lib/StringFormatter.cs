@@ -14,7 +14,7 @@ namespace Soft_Walkman.Lib
         {
             string formattedString = "";
 
-            string numberPattern = @"(^([0-9]+)(\s?)(-?))";
+            const string numberPattern = @"(^([0-9]+)(\s?)(-?))";
 
             var regex = new Regex(numberPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
@@ -44,7 +44,7 @@ namespace Soft_Walkman.Lib
         {
             string formattedString = "";
 
-            string extPattern = @"(\.[a-zA-Z0-9]+)";
+            const string extPattern = @"(\.[a-zA-Z0-9]+)";
 
             var regex = new Regex(extPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

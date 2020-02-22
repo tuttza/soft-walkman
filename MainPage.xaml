@@ -51,7 +51,7 @@
             </Button.KeyboardAccelerators>
         </Button>
 
-        <Image AllowDrop="True" DragOver="Tape_DragOver" Drop="Tape_DragDrop" HorizontalAlignment="Left" Height="302" Margin="43,28,0,0" VerticalAlignment="Top" Width="556">
+        <Image CacheMode="BitmapCache" AllowDrop="True" DragOver="Tape_DragOver" Drop="Tape_DragDrop" HorizontalAlignment="Left" Height="302" Margin="43,28,0,0" VerticalAlignment="Top" Width="556">
             <Image.Source>
                 <BitmapImage x:Name="cassetteTapeGif" UriSource="Assets/CassetteImages/rolling-cassette.gif"></BitmapImage>
             </Image.Source>
@@ -103,7 +103,7 @@
             </Button.KeyboardAccelerators>
             <Button.Flyout>
                 <Flyout Placement="Bottom">
-                    <Image x:Name="AlbumArtImage" Height="300" Width="300" />
+                    <Image x:Name="AlbumArtImage" Height="300" Width="300" CacheMode="BitmapCache" />
                 </Flyout>
             </Button.Flyout>
         </Button>
